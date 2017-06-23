@@ -5,8 +5,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">	
 </head>
 <body>
+	<nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
 
+          <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right navigation">
+              <li><a href="/">E-Library</a></li>
+              <li><a href="/Login">Logout</a></li>
+              <li><a href="#">About us</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 </body>
 </html>

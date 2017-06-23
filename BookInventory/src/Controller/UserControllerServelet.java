@@ -21,7 +21,7 @@ import DButil.UserDbutil;
 @WebServlet("/UserControllerServelet")
 public class UserControllerServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-private UserDbutil userdb;
+	private UserDbutil userdb;
 	
 	@Resource(name="jdbc/bookinventory")
 	private DataSource dataSource;

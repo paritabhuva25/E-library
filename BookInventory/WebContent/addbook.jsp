@@ -8,6 +8,13 @@
 </head>
 <body>
 	<%@include file="header.jsp" %>
-	
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">ADD NEW BOOK HERE</h3>
+	  </div>
+	  <div class="panel-body">
+	    Panel content
+	  </div>
+	</div>
 </body>
 </html>
