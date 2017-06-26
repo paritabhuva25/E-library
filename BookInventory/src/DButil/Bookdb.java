@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+
+
 import Controller.Book;
 import Controller.User;
 
@@ -23,7 +25,9 @@ public class Bookdb {
 	public Bookdb(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
-public List<Book> getStudents() throws Exception {
+public List<Book> getBook() throws Exception {
+	
+	
 		
 		List<Book> book = new ArrayList<>();
 		
@@ -56,7 +60,7 @@ public List<Book> getStudents() throws Exception {
 				int price =  Integer.parseInt(price1);
 				
 				String authorId1 = myRs.getString("authorId1");
-				int authorId =  Integer.parseInt(price1);
+				int authorId =  Integer.parseInt(authorId1);
 				
 				String publisherId1 = myRs.getString("publisherId");
 				int publisherId = Integer.parseInt(publisherId1);
@@ -70,13 +74,11 @@ public List<Book> getStudents() throws Exception {
 				String soldquantity1 = myRs.getString("soldquantity");
 				int soldquantity = Integer.parseInt(soldquantity1);
 
-				String publicationDate = myRs.getString("publicationDate");
-				DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date myDate = formatter.parse(publicationDate);
+				Date publicationDate = myRs.getDate("publicationDate");
 				
-				String purchaseDate = myRs.getString("purchaseDate");
-				java.util.Date myDate1 = formatter.parse(purchaseDate);
 				
+				Date purchaseDate = myRs.getDate("purchaseDate");
+			
 				// create new student object
 				Book bookdetail = new Book(bookTitle, isbnNo, price, authorId, publisherId, studentId, quantity, soldquantity, publicationDate, purchaseDate);
 				
@@ -111,6 +113,112 @@ private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		exc.printStackTrace();
 	}
 }
+public Book getBook(String bookId) throws Exception {
+
+	Book book = null;
+	
+	Connection myConn = null;
+	PreparedStatement myStmt = null;
+	ResultSet myRs = null;
+	int bookid;
+	
+	try {
+		// convert student id to int
+		bookid = Integer.parseInt(bookId);
+		
+		// get connection to database
+		myConn = dataSource.getConnection();
+		
+		// create sql to get selected student
+		String sql = "select * from book where book_id = ?";
+		
+		// create prepared statement
+		myStmt = myConn.prepareStatement(sql);
+		
+		// set params
+		myStmt.setInt(1, bookid);
+		
+		// execute statement
+		myRs = myStmt.executeQuery();
+		
+		// retrieve data from result set row
+		if (myRs.next()) {
+
+			String bookTitle = myRs.getString("booktitle");
+			
+			String isbnNo1 = myRs.getString("isbnno");
+			int isbnNo = Integer.parseInt(isbnNo1);
+			
+			String price1 = myRs.getString("price");
+			int price =  Integer.parseInt(price1);
+			
+			String authorId1 = myRs.getString("authorId1");
+			int authorId =  Integer.parseInt(authorId1);
+			
+			String publisherId1 = myRs.getString("publisherId");
+			int publisherId = Integer.parseInt(publisherId1);
+			
+			String studentId1 = myRs.getString("studentId");
+			int studentId = Integer.parseInt(studentId1);
+			
+			String quantity1 = myRs.getString("quantity");
+			int quantity = Integer.parseInt(quantity1);
+			
+			String soldquantity1 = myRs.getString("soldquantity");
+			int soldquantity = Integer.parseInt(soldquantity1);
+
+			Date publicationDate = myRs.getDate("publicationDate");
+			
+			
+			Date purchaseDate = myRs.getDate("purchaseDate");
+		
+			// create new student object
+			Book bookdetail = new Book(bookid ,bookTitle, isbnNo, price, authorId, publisherId, studentId, quantity, soldquantity, publicationDate, purchaseDate);
+			
+			
+		}
+		else {
+			throw new Exception("Could not find book id: " + bookId);
+		}		
+		
+		System.out.println(book);
+		
+		return book;
+	}
+	finally {
+		// clean up JDBC objects
+		close(myConn, myStmt, myRs);
+	}
+}
+public void deleteBook(String bookId) throws Exception {
+
+	Connection myConn = null;
+	PreparedStatement myStmt = null;
+	
+	try {
+		// convert student id to int
+		int bookid = Integer.parseInt(bookId);
+		
+		// get connection to database
+		myConn = dataSource.getConnection();
+		
+		// create sql to delete student
+		String sql = "delete from book where id=?";
+		
+		// prepare statement
+		myStmt = myConn.prepareStatement(sql);
+		
+		// set params
+		myStmt.setInt(1, bookid);
+		
+		// execute sql statement
+		myStmt.execute();
+	}
+	finally {
+		// clean up JDBC code
+		close(myConn, myStmt, null);
+	}	
+}
 public void addBook(Book book) throws Exception {
 
 	Connection myConn = null;
@@ -123,16 +231,15 @@ public void addBook(Book book) throws Exception {
 		// create sql for insert
 		String sql = "insert into book "
 				   + "(book_title,book_isbn,book_publicationyear,book_price,book_author_id,book_publisher_id,book_purchasedate,book_totalquantity,book_soldquantity,book_student_issueid) "
-				   + "values (?, ?)";
+				   + "values (?, ?,?,?,?,?,?,?,?,?)";
 		
 		myStmt = myConn.prepareStatement(sql);
 		
-		String publicationDate1 = book.getPublicationDate();
-		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date publicationDate = (Date) formatter.parse(publicationDate1);
+		java.util.Date publicationDate1 =  book.getPublicationDate();
+		java.sql.Date publicationDate = new java.sql.Date(publicationDate1.getTime());
 		
-		String purchaseDate1 = book.getPurchaseDate();
-		Date purchaseDate = (Date) formatter.parse(purchaseDate1);
+		java.util.Date purchaseDate1 = book.getPurchaseDate();
+		java.sql.Date purchaseDate = new java.sql.Date(purchaseDate1.getTime());
 		
 		// set the param values for the student
 		myStmt.setString(1, book.getBookTitle());
@@ -140,8 +247,11 @@ public void addBook(Book book) throws Exception {
 		myStmt.setDate(3, publicationDate);
 		myStmt.setInt(4, book.getPrice());
 		myStmt.setInt(5, book.getAuthorId());
-		myStmt.setDate(6, purchaseDate);
-		myStmt.setInt(7, x);
+		myStmt.setInt(6, book.getPublisherId());
+		myStmt.setDate(7, purchaseDate);
+		myStmt.setInt(8, book.getQuantity());
+		myStmt.setInt(9, book.getSoldquantity());
+		myStmt.setInt(10, 1);
 		// execute sql insert
 		myStmt.execute();
 	}
@@ -150,6 +260,50 @@ public void addBook(Book book) throws Exception {
 		close(myConn, myStmt, null);
 	}
 }
+public void updateBook(Book book) throws Exception {
+		
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+
+		try {
+			// get db connection
+			myConn = dataSource.getConnection();
+			
+			// create SQL update statement
+			String sql = "update book "
+						+ "set book_title = ?,book_isbn =  ?,book_publicationyear = ?,book_price = ?,book_author_id = ?,book_publisher_id = ?,book_purchasedate = ?,book_totalquantity =?,book_soldquantity =?,book_student_issueid = ?"
+						+ "where book_id=?";
+			
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+			
+
+			java.util.Date publicationDate1 =  book.getPublicationDate();
+			java.sql.Date publicationDate = new java.sql.Date(publicationDate1.getTime());
+			
+			java.util.Date purchaseDate1 = book.getPurchaseDate();
+			java.sql.Date purchaseDate = new java.sql.Date(purchaseDate1.getTime());
+			
+			// set params
+			myStmt.setString(1, book.getBookTitle());
+			myStmt.setInt(2, book.getIsbnNo());
+			myStmt.setDate(3, publicationDate);
+			myStmt.setInt(4, book.getPrice());
+			myStmt.setInt(5, book.getAuthorId());
+			myStmt.setInt(6, book.getPublisherId());
+			myStmt.setDate(7, purchaseDate);
+			myStmt.setInt(8, book.getQuantity());
+			myStmt.setInt(9, book.getSoldquantity());
+			myStmt.setInt(10, 1);
+			
+			// execute SQL statement
+			myStmt.execute();
+		}
+		finally {
+			// clean up JDBC objects
+			close(myConn, myStmt, null);
+		}
+	}
 
 
 

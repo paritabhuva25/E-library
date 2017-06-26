@@ -1,7 +1,10 @@
 package Controller;
 
+import java.util.Date;
+
 public class Book {
 
+	private int bookId;
 	private String bookTitle;
 	private int isbnNo;
 	private int price;
@@ -10,13 +13,28 @@ public class Book {
 	private int studentId;
 	private int quantity;
 	private int soldquantity;
-	private String publicationDate;
-	private String purchaseDate;
+	private Date publicationDate;
+	private Date purchaseDate;
 
 	
 	public Book(String bookTitle, int isbnNo, int price, int authorId, int publisherId, int studentId, int quantity,
-			int soldquantity, String publicationDate, String purchaseDate) {
+			int soldquantity, Date publicationDate, Date purchaseDate) {
 		super();
+		this.bookTitle = bookTitle;
+		this.isbnNo = isbnNo;
+		this.price = price;
+		this.authorId = authorId;
+		this.publisherId = publisherId;
+		this.studentId = studentId;
+		this.quantity = quantity;
+		this.soldquantity = soldquantity;
+		this.publicationDate = publicationDate;
+		this.purchaseDate = purchaseDate;
+	}
+	public Book(int bookId,String bookTitle, int isbnNo, int price, int authorId, int publisherId, int studentId, int quantity,
+			int soldquantity, Date publicationDate, Date purchaseDate) {
+		super();
+		this.bookId = bookId;
 		this.bookTitle = bookTitle;
 		this.isbnNo = isbnNo;
 		this.price = price;
@@ -76,16 +94,16 @@ public class Book {
 	public void setSoldquantity(int soldquantity) {
 		this.soldquantity = soldquantity;
 	}
-	public String getPublicationDate() {
+	public Date getPublicationDate() {
 		return publicationDate;
 	}
-	public void setPublicationDate(String publicationDate) {
+	public void setPublicationDate(Date publicationDate) {
 		this.publicationDate = publicationDate;
 	}
-	public String getPurchaseDate() {
+	public Date getPurchaseDate() {
 		return purchaseDate;
 	}
-	public void setPurchaseDate(String purchaseDate) {
+	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 	@Override
