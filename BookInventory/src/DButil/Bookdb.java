@@ -40,50 +40,53 @@ public List<Book> getBook() throws Exception {
 			myConn = dataSource.getConnection();
 			
 			// create sql statement
-			String sql = "select * from book order by book_title";
+			String sql = "select * from book";
 			
 			myStmt = myConn.createStatement();
 			
 			// execute query
 			myRs = myStmt.executeQuery(sql);
 			
+			System.out.println(myRs);
 			// process result set
 			while (myRs.next()) {
 				
+				String bookId1 = myRs.getString("book_id");
+				int bookId = Integer.parseInt(bookId1);
 				
-				String bookTitle = myRs.getString("booktitle");
+				String bookTitle = myRs.getString("book_title");
 				
-				String isbnNo1 = myRs.getString("isbnno");
+				String isbnNo1 = myRs.getString("book_isbn");
 				int isbnNo = Integer.parseInt(isbnNo1);
 				
-				String price1 = myRs.getString("price");
+				String price1 = myRs.getString("book_price");
 				int price =  Integer.parseInt(price1);
 				
-				String authorId1 = myRs.getString("authorId1");
+				String authorId1 = myRs.getString("book_author_id");
 				int authorId =  Integer.parseInt(authorId1);
 				
-				String publisherId1 = myRs.getString("publisherId");
+				String publisherId1 = myRs.getString("book_publisher_id");
 				int publisherId = Integer.parseInt(publisherId1);
 				
-				String studentId1 = myRs.getString("studentId");
+				String studentId1 = myRs.getString("book_student_issueid");
 				int studentId = Integer.parseInt(studentId1);
 				
-				String quantity1 = myRs.getString("quantity");
+				String quantity1 = myRs.getString("book_totalquantity");
 				int quantity = Integer.parseInt(quantity1);
 				
-				String soldquantity1 = myRs.getString("soldquantity");
+				String soldquantity1 = myRs.getString("book_soldquantity");
 				int soldquantity = Integer.parseInt(soldquantity1);
 
-				Date publicationDate = myRs.getDate("publicationDate");
+				Date publicationDate = myRs.getDate("book_publicationyear");
 				
 				
-				Date purchaseDate = myRs.getDate("purchaseDate");
+				Date purchaseDate = myRs.getDate("book_purchasedate");
 			
 				// create new student object
-				Book bookdetail = new Book(bookTitle, isbnNo, price, authorId, publisherId, studentId, quantity, soldquantity, publicationDate, purchaseDate);
+				Book bookdetail = new Book(bookId, bookTitle, isbnNo, price, authorId, publisherId, studentId, quantity, soldquantity, publicationDate, purchaseDate);
 				
 				// add it to the list of students
-						book.add(bookdetail);				
+				book.add(bookdetail);				
 			}
 			
 			return book;		

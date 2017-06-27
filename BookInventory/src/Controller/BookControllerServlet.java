@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 
 import DButil.Bookdb;
@@ -25,7 +24,7 @@ import DButil.UserDbutil;
  * Servlet implementation class BookControllerServelet
  */
 @WebServlet("/BookControllerServelet")
-public class BookControllerServelet extends HttpServlet {
+public class BookControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private Bookdb bookdb;
@@ -45,15 +44,9 @@ public class BookControllerServelet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 		
 		try {
 			// read the "command" parameter
@@ -64,6 +57,7 @@ public class BookControllerServelet extends HttpServlet {
 			// if the command is missing, then default to listing students
 			if (theCommand == null) {
 				theCommand = "LIST";
+				System.out.println("Listing data");
 			}
 			
 			// route to the appropriate method
@@ -90,7 +84,7 @@ public class BookControllerServelet extends HttpServlet {
 				break;
 		
 			default:
-			//	listBook(request, response);
+				listBook(request, response);
 			}
 				
 		}
@@ -203,7 +197,7 @@ public class BookControllerServelet extends HttpServlet {
 			int soldquantity = Integer.parseInt(soldquantity1);
 
 			String publicationDate1 = request.getParameter("publicationDate");
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat format = new SimpleDateFormat("MM-DD-YYYY");
 			Date publicationDate = format.parse(publicationDate1);
 			
 			String purchaseDate1 = request.getParameter("purchaseDate");
@@ -220,6 +214,8 @@ public class BookControllerServelet extends HttpServlet {
 
 		private void listBook(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
+			
+			System.out.println("callll");
 
 			// get students from db util
 			List<Book> book = bookdb.getBook();
@@ -228,7 +224,7 @@ public class BookControllerServelet extends HttpServlet {
 			
 			// add students to the request
 			request.setAttribute("BOOK_LIST", book);
-					
+			
 			// send to JSP page (view)
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/homepage.jsp");
 			dispatcher.forward(request, response);
