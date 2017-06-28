@@ -9,8 +9,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.Publisher;
-import Controller.User;
+import pojo.Publisher;
+import pojo.User;
 
 public class PublisherDbutil {
 

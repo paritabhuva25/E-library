@@ -1,4 +1,4 @@
-package Controller;
+package pojo;
 
 import java.util.Date;
 
@@ -45,6 +45,15 @@ public class Book {
 		this.soldquantity = soldquantity;
 		this.publicationDate = publicationDate;
 		this.purchaseDate = purchaseDate;
+	}
+	
+	
+	
+		public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
 	public String getBookTitle() {
 		return bookTitle;
@@ -106,13 +115,14 @@ public class Book {
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
-	@Override
+		@Override
 	public String toString() {
-		return "Book [bookTitle=" + bookTitle + ", isbnNo=" + isbnNo + ", price=" + price + ", authorId=" + authorId
-				+ ", publisherId=" + publisherId + ", studentId=" + studentId + ", quantity=" + quantity
-				+ ", soldquantity=" + soldquantity + ", publicationDate=" + publicationDate + ", purchaseDate="
-				+ purchaseDate + "]";
+		return "Book [bookId=" + bookId + ", bookTitle=" + bookTitle + ", isbnNo=" + isbnNo + ", price=" + price
+				+ ", authorId=" + authorId + ", publisherId=" + publisherId + ", studentId=" + studentId + ", quantity="
+				+ quantity + ", soldquantity=" + soldquantity + ", publicationDate=" + publicationDate
+				+ ", purchaseDate=" + purchaseDate + "]";
 	}
+	
 	
 	
 	

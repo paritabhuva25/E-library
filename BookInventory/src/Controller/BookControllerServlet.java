@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import DButil.Bookdb;
 import DButil.UserDbutil;
+import pojo.Book;
 
 /**
  * Servlet implementation class BookControllerServelet
@@ -44,7 +45,12 @@ public class BookControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 	}
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		
+		
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -74,6 +80,9 @@ public class BookControllerServlet extends HttpServlet {
 				loadBook(request, response);
 				break;
 				
+			case "BUY":
+				buyBook(request, response);
+				break;	
 			case "UPDATE":
 				updateBook(request, response);
 				break;
@@ -92,6 +101,15 @@ public class BookControllerServlet extends HttpServlet {
 		}
 	}
 	
+	private void buyBook(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		String bookId = request.getParameter("bookId");
+		
+	//	bookdb.buyBook(bookId);
+		
+		//listBook(request, response);
+
+	}
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
@@ -153,6 +171,7 @@ public class BookControllerServlet extends HttpServlet {
 		private void loadBook(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
+			System.out.println("buy");
 			// read student id from form data
 			String bookId = request.getParameter("studentId");
 			
@@ -213,14 +232,14 @@ public class BookControllerServlet extends HttpServlet {
 		private void listBook(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 			
-			System.out.println("callll");
+			
 
-			// get students from db util
+			// get book from db util
 			List<Book> book = bookdb.getBook();
 			
-			System.out.println(book);
 			
-			// add students to the request
+			
+			// add book to the request
 			request.setAttribute("BOOK_LIST", book);
 			
 			// send to JSP page (view)

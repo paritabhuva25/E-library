@@ -12,10 +12,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-
-
-import Controller.Book;
-import Controller.User;
+import pojo.Book;
+import pojo.User;
 
 public class Bookdb {
 	

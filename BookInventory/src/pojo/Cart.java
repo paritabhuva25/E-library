@@ -1,4 +1,4 @@
-package Controller;
+package pojo;
 
 public class Cart {
 

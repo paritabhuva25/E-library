@@ -17,7 +17,7 @@
 			<h3 class="panel-title">ADD NEW BOOK HERE</h3>
 		</div>
 		<div class="panel-body" style="margin: 10px;">
-			<form action="BookControllerServlet" method="GET">
+			<form action="BookControllerServlet" method="POST">
 
 				<input type="hidden" name="command" value="ADD" />
 

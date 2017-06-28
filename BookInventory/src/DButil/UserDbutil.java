@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.User;
+import pojo.User;
 
 public class UserDbutil {
 	

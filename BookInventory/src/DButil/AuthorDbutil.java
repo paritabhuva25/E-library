@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.Author;
+import pojo.Author;
 
 public class AuthorDbutil {
 

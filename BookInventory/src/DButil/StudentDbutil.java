@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.Author;
-import Controller.Student;
+import pojo.Author;
+import pojo.Student;
 
 public class StudentDbutil {
 	

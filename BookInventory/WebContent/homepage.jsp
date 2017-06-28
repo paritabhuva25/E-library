@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%@include file="header.jsp" %>
-	
+
 		<div class="panel panel-default" style="margin: 30px;">
 			<div class="panel-heading col-xs-12">
 				<div class="col-xs-3">
@@ -42,6 +42,7 @@
 			</div>				
 			</div>
 			<div class="panel-body" style="margin: 10px;">
+				<div class="col-xs-12">
 				<table>
 			
 				<tr>
@@ -51,6 +52,18 @@
 					<th>Price</th>
 				</tr>
 				<c:forEach var="tempbook" items="${BOOK_LIST}">
+					
+					<!-- set up a link for each student -->
+					<c:url var="tempLink" value="BookControllerServlet">
+						<c:param name="command" value="BUY" />
+						<c:param name="bookId" value="${tempbook.bookId}" />
+					</c:url>
+
+					<!--  set up a link to delete a student -->
+					<c:url var="cartlink" value="BookControllerServlet">
+						<c:param name="command" value="CART" />
+						<c:param name="bookId" value="${tempbook.bookId}" />
+					</c:url>
 								
 					<tr>
 						<td> ${tempbook.bookTitle} </td>
@@ -58,11 +71,19 @@
 						<td> ${tempbook.publisherId} </td>
 						<td> ${tempbook.price} </td>
 						<td> 
-							<a href="${tempLink}">Buy</a> 
-							 | 
-							<a href="${deleteLink}">Rent</a>
-							 | 
-							<a href="${deleteLink}">Add to cart
+							<input class="form-control btn btn-defaukt save" type="submit"
+							onclick="window.location.href='buybook.jsp'; return false;"
+							value="BUY" />
+						</td>
+						<td> 
+							<input class="form-control btn btn-defaukt save" type="submit"
+							onclick="window.location.href='addauthor.jsp'; return false;"
+							value="CART" />
+						</td>
+						<td> 
+							<input class="form-control btn btn-defaukt save" type="submit"
+							onclick="window.location.href='addauthor.jsp'; return false;"
+							value="RENT" />
 						</td>
 					</tr>
 				
@@ -70,6 +91,7 @@
 				
 			</table>
 			</div>
-		</div>
-</body>
+			</div>
+		
+	</body>
 </html>
