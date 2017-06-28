@@ -23,7 +23,7 @@ import DButil.UserDbutil;
 /**
  * Servlet implementation class BookControllerServelet
  */
-@WebServlet("/BookControllerServelet")
+@WebServlet("/BookControllerServlet")
 public class BookControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,12 +52,11 @@ public class BookControllerServlet extends HttpServlet {
 			// read the "command" parameter
 			String theCommand = request.getParameter("command");
 			
-			System.out.println(theCommand);
 			
 			// if the command is missing, then default to listing students
 			if (theCommand == null) {
 				theCommand = "LIST";
-				System.out.println("Listing data");
+				
 			}
 			
 			// route to the appropriate method
@@ -171,8 +170,7 @@ public class BookControllerServlet extends HttpServlet {
 
 		private void addBook(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
-			System.out.println("innnn");
-			System.out.println(request);
+			
 			// read student info from form data
 			String bookTitle = request.getParameter("booktitle");
 			

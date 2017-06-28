@@ -7,6 +7,52 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%@include file="header.jsp" %>
+	
+		<div class="panel panel-default" style="margin: 30px;">
+			<div class="panel-heading col-xs-12">
+				<div class="col-xs-3">
+					<h3 class="panel-title">Your Library is here !!</h3>
+				</div>
+				<div class="col-xs-3"></div>
+				<div class="col-xs-3"></div>
+				<div class="col-xs-3" style = "text-align: right;">
+					<input class="form-control btn btn-defaukt save" type="submit"
+						onclick="window.location.href='addbook.jsp'; return false;"
+						
+						value="Add book" />
+				</div>
+			</div>				
+			</div>
+			<div class="panel-body" style="margin: 10px;">
+				<table>
+			
+				<tr>
+					<th>Book Title</th>
+					<th>Author</th>
+					<th>Publisher</th>
+					<th>Price</th>
+				</tr>
+				<c:forEach var="tempbook" items="${BOOK_LIST}">
+								
+					<tr>
+						<td> ${tempbook.bookTitle} </td>
+						<td> ${tempbook.authorId} </td>
+						<td> ${tempbook.publisherId} </td>
+						<td> ${tempbook.price} </td>
+						<td> 
+							<a href="${tempLink}">Buy</a> 
+							 | 
+							<a href="${deleteLink}">Rent</a>
+							 | 
+							<a href="${deleteLink}">Add to cart
+						</td>
+					</tr>
+				
+				</c:forEach>
+				
+			</table>
+			</div>
+		</div>
 </body>
 </html>

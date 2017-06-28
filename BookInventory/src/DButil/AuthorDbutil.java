@@ -9,22 +9,21 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.Publisher;
-import Controller.User;
+import Controller.Author;
 
-public class PublisherDbutil {
+public class AuthorDbutil {
 
 	private DataSource dataSource;
 	
-	public PublisherDbutil(DataSource thedataSource) {
+	public AuthorDbutil(DataSource thedataSource) {
 		// TODO Auto-generated constructor stub
 		
 		dataSource = thedataSource;
 	}
 	
-public List<Publisher> getPublisher() throws Exception {
+public List<Author> getAuthor() throws Exception {
 		
-		List<Publisher> publisherlist = new ArrayList<>();
+		List<Author> authorlist = new ArrayList<>();
 		
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -35,7 +34,7 @@ public List<Publisher> getPublisher() throws Exception {
 			myConn = dataSource.getConnection();
 			
 			// create sql statement
-			String sql = "select * from publisher order by publisher_name";
+			String sql = "select * from author order by author_name";
 			
 			myStmt = myConn.createStatement();
 			
@@ -46,19 +45,16 @@ public List<Publisher> getPublisher() throws Exception {
 			while (myRs.next()) {
 				
 				
-				String publisherName = myRs.getString("publisher_name");
-				String publisherCountry = myRs.getString("publisher_country");
-				String contactNumber1 = myRs.getString("publisher_phonenumber");
-				int contactNumber = Integer.parseInt(contactNumber1);
-				String bookName = myRs.getString("book_name"); 
+				String authorName = myRs.getString("author_name");
+				String bookName = myRs.getString("author_bookName"); 
 				// create new student object
-				Publisher publisher = new Publisher(publisherName, publisherCountry, contactNumber, bookName);
+				Author author = new Author(authorName, bookName);
 				
 				
-				publisherlist.add(publisher);				
+				authorlist.add(author);				
 			}
 			
-			return publisherlist;		
+			return authorlist;		
 		
 		}
 		finally {
@@ -85,7 +81,7 @@ private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		exc.printStackTrace();
 	}
 }
-public void addPublisher(Publisher publisher) throws Exception {
+public void addAuthor(Author author) throws Exception {
 	
 
 	Connection myConn = null;
@@ -96,18 +92,16 @@ public void addPublisher(Publisher publisher) throws Exception {
 		myConn = dataSource.getConnection();
 		
 		// create sql for insert
-		String sql = "insert into publisher "
-				   + "(publisher_name,publisher_country,publisher_phonenumber,book_name) "
-				   + "values (?, ?, ?, ?)";
+		String sql = "insert into author "
+				   + "(author_name,author_bookName) "
+				   + "values (?, ?)";
 		
 		myStmt = myConn.prepareStatement(sql);
 		
 		// set the param values for the student
-		myStmt.setString(1, publisher.getPublisherName());
-		myStmt.setString(2, publisher.getPublisherCountry());
-		myStmt.setInt(3, publisher.getContactNumber());
-		myStmt.setString(4, publisher.getBookName());
-
+		myStmt.setString(1, author.getAuthorName());
+		myStmt.setString(2, author.getAuthorbookName());
+		
 		// execute sql insert
 		myStmt.execute();
 	}
@@ -118,6 +112,3 @@ public void addPublisher(Publisher publisher) throws Exception {
 }
 
 }
-
-		
-

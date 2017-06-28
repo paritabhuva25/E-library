@@ -16,10 +16,23 @@
 		<div class="panel panel-default" style="margin: 30px;">
 			<div class="panel-heading col-xs-12">
 				<div class="col-xs-3">
-					<h3 class="panel-title">Your Library is here !!</h3>
+				<input class="form-control btn btn-defaukt save" type="submit"
+						onclick="window.location.href='addstudent.jsp'; return false;"
+						
+						value="Add student" /></div>
+				
+				<div class="col-xs-3">
+					<input class="form-control btn btn-defaukt save" type="submit"
+						onclick="window.location.href='addauthor.jsp'; return false;"
+						
+						value="Add Author" />
 				</div>
-				<div class="col-xs-3"></div>
-				<div class="col-xs-3"></div>
+				<div class="col-xs-3">
+					<input class="form-control btn btn-defaukt save" type="submit"
+						onclick="window.location.href='addpublisher.jsp'; return false;"
+						
+						value="Add Publisher" />
+				</div>
 				<div class="col-xs-3" style = "text-align: right;">
 					<input class="form-control btn btn-defaukt save" type="submit"
 						onclick="window.location.href='addbook.jsp'; return false;"
@@ -47,9 +60,7 @@
 						<td> 
 							<a href="${tempLink}">Buy</a> 
 							 | 
-							<a href="${deleteLink}">Rent
-							</a>
-							<a href="${tempLink}">Buy</a> 
+							<a href="${deleteLink}">Rent</a>
 							 | 
 							<a href="${deleteLink}">Add to cart
 						</td>

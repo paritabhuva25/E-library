@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-	
-	
 </head>
 <body>
 	<%@include file="header.jsp"%>
@@ -17,35 +13,29 @@
 			<h3 class="panel-title">ADD NEW PUBLISHER HERE</h3>
 		</div>
 		<div class="panel-body" style="margin: 10px;">
-			<form action="PublisherControllerServlet" method="POST">
+			<form action="StudentControllerServlet" method="POST">
 
 				<input type="hidden" name="command" value="ADD" />
 
 				<div class="form-group row">
-					<label for="example-text-input" class="col-xs-3 col-form-label">Publisher Name
+					<label for="example-text-input" class="col-xs-3 col-form-label">Student Name
 					</label>
 					<div class="col-xs-9">
-						<input class="form-control" type="text" name="publishername">
+						<input class="form-control" type="text" name="studentname">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-xs-3 col-form-label">Publisher country
-						</label>
+					<label for="example-text-input" class="col-xs-3 col-form-label">Issue Date
+					</label>
 					<div class="col-xs-9">
-						<input class="form-control" type="text" name="publishercountry">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="example-number-input" class="col-xs-3 col-form-label">mobilenumber</label>
-					<div class="col-xs-9">
-						<input class="form-control" type="number" name="publishermobilenumber">
+						<input class="form-control" type="date" name="issuedate">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="example-number-input" class="col-xs-3 col-form-label">Book Name
 						</label>
 					<div class="col-xs-9">
-						<input class="form-control" type="text" name="publisherbookname">
+						<input class="form-control" type="text" name="studentbookname">
 					</div>
 				</div>
 				

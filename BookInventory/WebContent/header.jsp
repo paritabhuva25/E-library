@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">	
+
 </head>
 <body>
 	<nav class="navbar navbar-default">

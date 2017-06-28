@@ -1,6 +1,9 @@
 package Controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,15 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import DButil.AuthorDbutil;
+import DButil.StudentDbutil;
 
 /**
- * Servlet implementation class UserControllerServelet
+ * Servlet implementation class StudentControllerServelet
  */
-@WebServlet("/AuthorControllerServlet")
-public class AuthorControllerServlet extends HttpServlet {
+@WebServlet("/StudentControllerServlet")
+public class StudentControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private AuthorDbutil authordb;
+       
+	private StudentDbutil studentdb;
 	
 	@Resource(name="jdbc/bookinventory")
 	private DataSource dataSource;
@@ -32,25 +36,30 @@ public class AuthorControllerServlet extends HttpServlet {
 		
 		// create our student db util ... and pass in the conn pool / datasource
 		try {
-			authordb = new AuthorDbutil(dataSource);
+			studentdb = new StudentDbutil(dataSource);
 		}
 		catch (Exception exc) {
 			throw new ServletException(exc);
 		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	doGet(request,response);
-	}		
-	
+		// TODO Auto-generated method stub
+		doGet(request, response);
+		
+		System.out.println("callllll");
+		
+		
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
 		try {
 			// read the "command" parameter
 			String theCommand = request.getParameter("command");
 			
-
+			System.out.println(theCommand);
 			
 			// if the command is missing, then default to listing students
 			if (theCommand == null) {
@@ -61,16 +70,16 @@ public class AuthorControllerServlet extends HttpServlet {
 			switch (theCommand) {
 			
 			case "LIST":
-				listAuthor(request, response);
+				listStudent(request, response);
 				break;
 				
 			case "ADD":
-				addAuthor(request, response);
+				addStudent(request, response);
 				break;
 				
 		
 			default:
-				listAuthor(request, response);
+				listStudent(request, response);
 			}
 				
 		}
@@ -78,34 +87,38 @@ public class AuthorControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 	}
-		private void addAuthor(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			// read student info from form data
-			String authorName = request.getParameter("authorname");
-			String bookName = request.getParameter("authorbookname");
+			String studentName = request.getParameter("studentname");
 			
+			String studentIssuedate1 = request.getParameter("issuedate");
+			DateFormat format = new SimpleDateFormat("mm/dd/yyyy");
+			Date  studentIssuedate = format.parse(studentIssuedate1);
+			
+			String studentbookName = request.getParameter("studentbookname");
 			
 			// create a new publisher object
 			
-			Author author =new Author(authorName, bookName);
+			Student student =new Student(studentName, studentIssuedate, studentbookName);
 					
-			System.out.println(author);
+			System.out.println(student);
 			// add the publisher to the database
 			
-			authordb.addAuthor(author);
+			studentdb.addStudent(student);
 			
 			// send back to main page (the publisher list)
-			listAuthor(request, response);
+			listStudent(request, response);
 		}
 
-		private void listAuthor(HttpServletRequest request, HttpServletResponse response) 
+		private void listStudent(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
 			// get students from db util
-			List<Author> author = authordb.getAuthor();
+			List<Student> student = studentdb.getStudent();
 			
 			// add students to the request
-			request.setAttribute("AUTHOR_LIST", author);
+			request.setAttribute("STUDENT_LIST", student);
 					
 			// send to JSP page (view)
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/publisherlist.jsp");
@@ -113,4 +126,10 @@ public class AuthorControllerServlet extends HttpServlet {
 		}
 	
 
-	}
+	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	
+}

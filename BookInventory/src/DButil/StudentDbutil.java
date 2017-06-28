@@ -5,26 +5,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import Controller.Publisher;
-import Controller.User;
+import Controller.Author;
+import Controller.Student;
 
-public class PublisherDbutil {
-
-	private DataSource dataSource;
+public class StudentDbutil {
 	
-	public PublisherDbutil(DataSource thedataSource) {
+private DataSource dataSource;
+	
+	public StudentDbutil(DataSource thedataSource) {
 		// TODO Auto-generated constructor stub
 		
 		dataSource = thedataSource;
 	}
 	
-public List<Publisher> getPublisher() throws Exception {
+public List<Student> getStudent() throws Exception {
 		
-		List<Publisher> publisherlist = new ArrayList<>();
+		List<Student> studentlist = new ArrayList<>();
 		
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -35,7 +36,7 @@ public List<Publisher> getPublisher() throws Exception {
 			myConn = dataSource.getConnection();
 			
 			// create sql statement
-			String sql = "select * from publisher order by publisher_name";
+			String sql = "select * from student order by student_name";
 			
 			myStmt = myConn.createStatement();
 			
@@ -46,19 +47,21 @@ public List<Publisher> getPublisher() throws Exception {
 			while (myRs.next()) {
 				
 				
-				String publisherName = myRs.getString("publisher_name");
-				String publisherCountry = myRs.getString("publisher_country");
-				String contactNumber1 = myRs.getString("publisher_phonenumber");
-				int contactNumber = Integer.parseInt(contactNumber1);
-				String bookName = myRs.getString("book_name"); 
+				String studentName = myRs.getString("student_name");
+				
+				Date studentIssuedate = myRs.getDate("student_issuedate");
+				
+				
+				String studentbookName = myRs.getString("student_bookName"); 
+				
 				// create new student object
-				Publisher publisher = new Publisher(publisherName, publisherCountry, contactNumber, bookName);
+				Student  student = new Student(studentName, studentIssuedate, studentbookName);
 				
 				
-				publisherlist.add(publisher);				
+				studentlist.add(student);				
 			}
 			
-			return publisherlist;		
+			return studentlist;		
 		
 		}
 		finally {
@@ -85,7 +88,7 @@ private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		exc.printStackTrace();
 	}
 }
-public void addPublisher(Publisher publisher) throws Exception {
+public void addStudent(Student student) throws Exception {
 	
 
 	Connection myConn = null;
@@ -96,18 +99,21 @@ public void addPublisher(Publisher publisher) throws Exception {
 		myConn = dataSource.getConnection();
 		
 		// create sql for insert
-		String sql = "insert into publisher "
-				   + "(publisher_name,publisher_country,publisher_phonenumber,book_name) "
-				   + "values (?, ?, ?, ?)";
+		String sql = "insert into student "
+				   + "(student_name,student_issuedate,student_bookName) "
+				   + "values (?, ?, ?)";
 		
 		myStmt = myConn.prepareStatement(sql);
 		
+		
+		java.util.Date studentIssuedate1 = student.getStudentIssuedate();
+		java.sql.Date studentIssuedate = new java.sql.Date(studentIssuedate1.getTime());
+		
 		// set the param values for the student
-		myStmt.setString(1, publisher.getPublisherName());
-		myStmt.setString(2, publisher.getPublisherCountry());
-		myStmt.setInt(3, publisher.getContactNumber());
-		myStmt.setString(4, publisher.getBookName());
-
+		myStmt.setString(1, student.getStudentName());
+		myStmt.setDate(2, studentIssuedate );
+		myStmt.setString(3, student.getStudentbookName());
+		
 		// execute sql insert
 		myStmt.execute();
 	}
@@ -116,8 +122,4 @@ public void addPublisher(Publisher publisher) throws Exception {
 		close(myConn, myStmt, null);
 	}
 }
-
 }
-
-		
-

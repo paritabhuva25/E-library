@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import DButil.PublisherDbutil;
-import DButil.UserDbutil;
 
 /**
  * Servlet implementation class UserControllerServelet
@@ -21,6 +20,7 @@ import DButil.UserDbutil;
 @WebServlet("/PublisherControllerServlet")
 public class PublisherControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private PublisherDbutil publisherdb;
 	
 	@Resource(name="jdbc/bookinventory")
@@ -38,17 +38,19 @@ public class PublisherControllerServlet extends HttpServlet {
 			throw new ServletException(exc);
 		}
 	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	doGet(request,response);
+	}		
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		
 		try {
 			// read the "command" parameter
 			String theCommand = request.getParameter("command");
+			
+
 			
 			// if the command is missing, then default to listing students
 			if (theCommand == null) {
@@ -68,7 +70,7 @@ public class PublisherControllerServlet extends HttpServlet {
 				
 		
 			default:
-				listStudents(request, response);
+				listPublisher(request, response);
 			}
 				
 		}
@@ -79,16 +81,23 @@ public class PublisherControllerServlet extends HttpServlet {
 		private void addPublisher(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			// read student info from form data
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
+			String publisherName = request.getParameter("publishername");
+			String publisherCountry = request.getParameter("publishercountry");
+			String contactNumber1 = request.getParameter("publishermobilenumber");
+			int contactNumber = Integer.parseInt(contactNumber1);
+			String bookName = request.getParameter("publisherbookname");
 			
-			// create a new student object
-			User user = new User(username, password);
 			
-			// add the student to the database
-			userdb.addStudent(user);
+			// create a new publisher object
+			
+			Publisher publisher =new Publisher(publisherName, publisherCountry, contactNumber, bookName);
 					
-			// send back to main page (the student list)
+			System.out.println(publisher);
+			// add the publisher to the database
+			
+			publisherdb.addPublisher(publisher);
+			
+			// send back to main page (the publisher list)
 			listPublisher(request, response);
 		}
 
@@ -96,13 +105,13 @@ public class PublisherControllerServlet extends HttpServlet {
 			throws Exception {
 
 			// get students from db util
-			List<User> user = publisherdb.getStudents();
+			List<Publisher> publisher = publisherdb.getPublisher();
 			
 			// add students to the request
-			request.setAttribute("STUDENT_LIST", user);
+			request.setAttribute("PUBLISHER_LIST", publisher);
 					
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/publisherlist.jsp");
 			dispatcher.forward(request, response);
 		}
 	
