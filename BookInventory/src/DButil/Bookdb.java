@@ -12,8 +12,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+
 import pojo.Book;
-import pojo.User;
 
 public class Bookdb {
 	
@@ -145,46 +145,47 @@ public Book getBook(String bookId) throws Exception {
 		// retrieve data from result set row
 		if (myRs.next()) {
 
-			String bookTitle = myRs.getString("booktitle");
+		
 			
-			String isbnNo1 = myRs.getString("isbnno");
+			String bookTitle = myRs.getString("book_title");
+			
+			String isbnNo1 = myRs.getString("book_isbn");
 			int isbnNo = Integer.parseInt(isbnNo1);
 			
-			String price1 = myRs.getString("price");
+			String price1 = myRs.getString("book_price");
 			int price =  Integer.parseInt(price1);
 			
-			String authorId1 = myRs.getString("authorId1");
+			String authorId1 = myRs.getString("book_author_id");
 			int authorId =  Integer.parseInt(authorId1);
 			
-			String publisherId1 = myRs.getString("publisherId");
+			String publisherId1 = myRs.getString("book_publisher_id");
 			int publisherId = Integer.parseInt(publisherId1);
 			
-			String studentId1 = myRs.getString("studentId");
+			String studentId1 = myRs.getString("book_student_issueid");
 			int studentId = Integer.parseInt(studentId1);
 			
-			String quantity1 = myRs.getString("quantity");
+			String quantity1 = myRs.getString("book_totalquantity");
 			int quantity = Integer.parseInt(quantity1);
 			
-			String soldquantity1 = myRs.getString("soldquantity");
+			String soldquantity1 = myRs.getString("book_soldquantity");
 			int soldquantity = Integer.parseInt(soldquantity1);
 
-			Date publicationDate = myRs.getDate("publicationDate");
+			Date publicationDate = myRs.getDate("book_publicationyear");
 			
-			
-			Date purchaseDate = myRs.getDate("purchaseDate");
-		
+			Date purchaseDate = myRs.getDate("book_purchasedate");
 			// create new student object
+			
 			Book bookdetail = new Book(bookid ,bookTitle, isbnNo, price, authorId, publisherId, studentId, quantity, soldquantity, publicationDate, purchaseDate);
 			
-			
+			return bookdetail;
 		}
 		else {
 			throw new Exception("Could not find book id: " + bookId);
 		}		
 		
-		System.out.println(book);
 		
-		return book;
+		
+		
 	}
 	finally {
 		// clean up JDBC objects

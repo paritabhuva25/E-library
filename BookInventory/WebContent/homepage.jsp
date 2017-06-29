@@ -54,8 +54,8 @@
 				<c:forEach var="tempbook" items="${BOOK_LIST}">
 					
 					<!-- set up a link for each student -->
-					<c:url var="tempLink" value="BookControllerServlet">
-						<c:param name="command" value="BUY" />
+					<c:url var="tempLink" value="BuybookControllerServlet">
+						<c:param name="command" value="SELECT" />
 						<c:param name="bookId" value="${tempbook.bookId}" />
 					</c:url>
 
@@ -71,9 +71,8 @@
 						<td> ${tempbook.publisherId} </td>
 						<td> ${tempbook.price} </td>
 						<td> 
-							<input class="form-control btn btn-defaukt save" type="submit"
-							onclick="window.location.href='buybook.jsp'; return false;"
-							value="BUY" />
+							<a href="${tempLink}"> <input class="form-control btn btn-defaukt save" type="submit"
+							value="BUY" /></a>
 						</td>
 						<td> 
 							<input class="form-control btn btn-defaukt save" type="submit"

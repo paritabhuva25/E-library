@@ -18,7 +18,6 @@
 		</div>
 		<div class="panel-body" style="margin: 10px;">
 			<form action="BookControllerServlet" method="POST">
-
 				<input type="hidden" name="command" value="ADD" />
 
 				<div class="form-group row">

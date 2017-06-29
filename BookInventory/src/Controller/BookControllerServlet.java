@@ -80,9 +80,6 @@ public class BookControllerServlet extends HttpServlet {
 				loadBook(request, response);
 				break;
 				
-			case "BUY":
-				buyBook(request, response);
-				break;	
 			case "UPDATE":
 				updateBook(request, response);
 				break;
@@ -101,15 +98,7 @@ public class BookControllerServlet extends HttpServlet {
 		}
 	}
 	
-	private void buyBook(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		String bookId = request.getParameter("bookId");
-		
-	//	bookdb.buyBook(bookId);
-		
-		//listBook(request, response);
-
-	}
+	
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
@@ -171,7 +160,7 @@ public class BookControllerServlet extends HttpServlet {
 		private void loadBook(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
-			System.out.println("buy");
+		
 			// read student id from form data
 			String bookId = request.getParameter("studentId");
 			
