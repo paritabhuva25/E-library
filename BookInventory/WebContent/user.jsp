@@ -7,51 +7,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="wrapper">
-		<div id="header">
-			<h2>FooBar University</h2>
-		</div>
-	</div>
+		<%@include file="header.jsp" %>
 	
 	<div id="container">
 		<h3>Add Student</h3>
 		
 		<form action="UserControllerServelet" method="POST">
 		
-			<input type="hidden" name="command" value="LIST" />
+			<input type="hidden" name="command" value="ADD" />
 			
 			<table>
 				<tbody>
 					<tr>
 						<td><label>User name:</label></td>
-						<td><input type="text" name="username" /></td>
+						<td><input type="text" name="regusername" /></td>
 					</tr>
 
 					<tr>
 						<td><label>Password:</label></td>
-						<td><input type="password" name="password" /></td>
+						<td><input type="password" name="regpassword" /></td>
 					</tr>
-					
+					<tr>
+						<td><label>Mobile Number:</label></td>
+						<td><input type="tel" name="regmobno" /></td>
+					</tr>
 					<tr>
 						<td><label></label></td>
 						<td><input type="submit" value="Save" class="save" /></td>
 					</tr>
-					<tr>
-						
-						<td><input class="form-control btn btn-defaukt save" type="submit"
-						onclick="window.location.href='user.jsp'; return false;"
-						
-						value="New User" /></td>
-					</tr>
+					
 				</tbody>
 			</table>
 		</form>
-		
-		<div style="clear: both;"></div>
-		
-		<p>
-			<a href="UserControllerServelet">Back to List</a>
-		</p>
 	</div>
 </body>
 </html>

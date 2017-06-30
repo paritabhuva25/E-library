@@ -10,7 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import pojo.Publisher;
-import pojo.User;
+
 
 public class PublisherDbutil {
 

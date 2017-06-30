@@ -84,11 +84,12 @@ public class UserControllerServelet extends HttpServlet {
 		private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			// read student info from form data
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			
+			String username = request.getParameter("regusername");
+			String password = request.getParameter("regpassword");
+			String mobilenumber1 = request.getParameter("regmobno");
+			int mobilenumber = Integer.parseInt(mobilenumber1);
 			// create a new student object
-			User user = new User(username, password);
+			User user = new User(username, password ,mobilenumber);
 			
 			// add the student to the database
 			userdb.addStudent(user);
