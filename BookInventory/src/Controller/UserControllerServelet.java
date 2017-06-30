@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import DButil.UserDbutil;
@@ -94,8 +95,9 @@ public class UserControllerServelet extends HttpServlet {
 			// add the student to the database
 			userdb.addStudent(user);
 					
-			// send back to main page (the student list)
-			listStudents(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Register.jsp");
+			dispatcher.forward(request, response);
+		
 		}
 
 		private void listStudents(HttpServletRequest request, HttpServletResponse response) 
@@ -104,12 +106,41 @@ public class UserControllerServelet extends HttpServlet {
 			// get students from db util
 			List<User> user = userdb.getStudents();
 			
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			int flag =0;
+			
+			for (int i = 0; i < user.size(); i++) {
+				
+				if(user.get(i).getPassword().equals(password) && user.get(i).getUsername().equals(username)){
+					
+					 HttpSession session=request.getSession();  
+				        session.setAttribute("uname",username);  
+					flag =1;
+					break;
+				}
+				
+				flag = 0;
+			}
+			
+			if(flag == 1){
+				
+				request.setAttribute("STUDENT_LIST", user);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/homepage.jsp");
+				dispatcher.forward(request, response);
+				
+			}else{
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/Register.jsp");
+				dispatcher.forward(request, response);
+			}
+			
+			
 			// add students to the request
-			request.setAttribute("STUDENT_LIST", user);
+			
 					
 			// send to JSP page (view)
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
-			dispatcher.forward(request, response);
+		
 		}
 	
 

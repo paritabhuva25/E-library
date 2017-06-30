@@ -9,7 +9,7 @@
 <body>
 	<div id="wrapper">
 		<div id="header">
-			<h2>FooBar University</h2>
+			<h2>E- Library</h2>
 		</div>
 	</div>
 	
@@ -34,7 +34,7 @@
 					
 					<tr>
 						<td><label></label></td>
-						<td><input type="submit" value="Save" class="save" /></td>
+						<td><input type="submit" value="Login" class="save" /></td>
 					</tr>
 					<tr>
 						

@@ -31,7 +31,7 @@ public List<User> getStudents() throws Exception {
 			myConn = dataSource.getConnection();
 			
 			// create sql statement
-			String sql = "select * from user order by user_name";
+			String sql = "select * from register";
 			
 			myStmt = myConn.createStatement();
 			
@@ -90,7 +90,7 @@ public void addStudent(User user) throws Exception {
 		myConn = dataSource.getConnection();
 		
 		// create sql for insert
-		String sql = "insert into user "
+		String sql = "insert into register "
 				   + "(reg_username,reg_password,reg_mobilenumber) "
 				   + "values (?, ?, ?)";
 		
